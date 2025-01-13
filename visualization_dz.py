@@ -23,6 +23,12 @@ def drop_rep_columns(df):
 
 
 def plot_visualization(df):
+    import pandas as pd
+    import numpy as np
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    from matplotlib import cm, transforms
+    import warnings
     """
     Creates a grid of subplots visualizing the relationship of all columns (except 'TR')
     with respect to the 'TR' column using point plots, swarm plots, and box plots.
