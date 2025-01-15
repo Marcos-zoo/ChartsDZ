@@ -115,33 +115,49 @@ def plot_visualization(df):
 
 
 def plot_distributions(df):
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    from matplotlib import cm
-    import warnings
     """
     Plots distribution plots (histograms with KDE) for each column in the DataFrame except the 'TR' column.
 
     Parameters:
     df (pd.DataFrame): The input DataFrame containing the data.
     """
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    from matplotlib import cm
+    import warnings
+
     warnings.filterwarnings("ignore")  # Ignore warnings
 
-    # Number of unique values in "TR"
-    TRn = df["TR"].nunique()
+    # Check if 'TR' exists in the DataFrame
+    if "TR" not in df.columns:
+        print("Column 'TR' not found in DataFrame. Proceeding with all columns.")
+        TRn = 0
+    else:
+        TRn = df["TR"].nunique()  # Number of unique values in "TR"
 
     # Generate a discrete color palette
-    cmap = cm.get_cmap("rocket", TRn)  # Sample colors from colormap
+    cmap = cm.get_cmap("rocket", TRn if TRn > 0 else 10)  # Sample colors from colormap
     palette = [cmap(i) for i in range(cmap.N)]
 
-    # Number of subplots
-    num_charts = len([col for col in df.columns if col != "TR"])  # Exclude 'TR'
+    # Exclude 'TR' from distribution plots
+    columns_to_plot = [col for col in df.columns if col != "TR"]
+    num_charts = len(columns_to_plot)
+
+    # Subplot grid
     num_cols = 2  # Number of columns in the grid
     num_rows = (num_charts + num_cols - 1) // num_cols  # Calculate rows dynamically
 
-import pandas as pd
-from IPython.display import display
+    plt.figure(figsize=(15, num_rows * 5))
 
+    for i, col in enumerate(columns_to_plot):
+        plt.subplot(num_rows, num_cols, i + 1)
+        sns.histplot(df[col], kde=True, color=palette[i % len(palette)])
+        plt.title(f"Distribution of {col}")
+        plt.xlabel(col)
+        plt.ylabel("Frequency")
+
+    plt.tight_layout()
+    plt.show()
 def summary_statistics(df):
     EVEN_ROW_COLOR = "#00BFFF"  # Light blue for even rows
     HEADER_COLOR = "#000000"  # Black for header text
