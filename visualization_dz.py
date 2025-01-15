@@ -217,7 +217,7 @@ def summary_statistics(df):
     ))
 
     print("\nCoeficiente de variação por tratamento (TR):")
-    coef_var = (df.groupby('TR').std() / df.groupby('TR').mean()*100).round(3)
+    coef_var = (df.groupby('TR').std() / df.groupby('TR').mean()).round(3)
     display(coef_var.style.set_table_styles(
         [
             {
