@@ -112,19 +112,47 @@ def plot_visualization(df):
     display(df.describe().round(3))
 
 
-# Example usage:
-if __name__ == "__main__":
-    # Example DataFrame
-    df = pd.DataFrame({
-        "TR": ["A", "B", "A", "B", "C"],
-        "Col1": [1, 2, 3, 4, 5],
-        "Col2": [5, 4, 3, 2, 1],
-        "Col3": [2, 3, 2, 3, 2],
-        "REP1": [0, 1, 0, 1, 0]
-    })
 
-    # Drop columns with 'REP'
-    df_cleaned = drop_rep_columns(df)
 
-    # Plot visualization
-    plot_visualization(df_cleaned)
+def plot_distributions(df):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    from matplotlib import cm
+    import warnings
+    """
+    Plots distribution plots (histograms with KDE) for each column in the DataFrame except the 'TR' column.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame containing the data.
+    """
+    warnings.filterwarnings("ignore")  # Ignore warnings
+
+    # Number of unique values in "TR"
+    TRn = df["TR"].nunique()
+
+    # Generate a discrete color palette
+    cmap = cm.get_cmap("rocket", TRn)  # Sample colors from colormap
+    palette = [cmap(i) for i in range(cmap.N)]
+
+    # Number of subplots
+    num_charts = len([col for col in df.columns if col != "TR"])  # Exclude 'TR'
+    num_cols = 2  # Number of columns in the grid
+    num_rows = (num_charts + num_cols - 1) // num_cols  # Calculate rows dynamically
+
+def summary_statistics(df):
+    """
+    Prints a summary of descriptive statistics for the given DataFrame.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame containing the data.
+    """
+    print("Visão geral dos dados")
+    print(df.describe().round(3))
+    print("\nMédias por tratamento (TR)")
+    print(df.groupby('TR').mean().round(3))
+    print("\nDesvio padrão por tratamento (TR)")
+    print(df.groupby('TR').std().round(3))
+    print("\nCoeficiente de variação por tratamento (TR)")
+    coef_var = (df.groupby('TR').std() / df.groupby('TR').mean()).round(3)
+    print(coef_var)
+
