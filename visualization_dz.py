@@ -110,8 +110,6 @@ def plot_visualization(df):
     fig.tight_layout()
     plt.show()
 
-    # Print the summary statistics
-    display(df.describe().round(3))
 
 
 
