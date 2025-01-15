@@ -155,9 +155,13 @@ def plot_distributions(df):
         plt.title(f"Distribution of {col}")
         plt.xlabel(col)
         plt.ylabel("Frequency")
-
+    
+    for idx in range(plot_idx, len(axes)):
+        fig.delaxes(axes[idx])  # Remove extra axes
     plt.tight_layout()
     plt.show()
+
+
 def summary_statistics(df):
     EVEN_ROW_COLOR = "#00BFFF"  # Light blue for even rows
     HEADER_COLOR = "#000000"  # Black for header text
