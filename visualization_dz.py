@@ -221,11 +221,13 @@ def all_dz_statistics(df):
     print("\nRunning summary_statistics...")
     summary_statistics(df)
 
+    print("\nRunning plot_distributions...")
+    plot_distributions(df)
+
     print("\nRunning plot_visualization...")
     plot_visualization(df)
 
-    print("\nRunning plot_distributions...")
-    plot_distributions(df)
+
 
 
 
