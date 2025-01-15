@@ -139,20 +139,71 @@ def plot_distributions(df):
     num_cols = 2  # Number of columns in the grid
     num_rows = (num_charts + num_cols - 1) // num_cols  # Calculate rows dynamically
 
-def summary_statistics(df):
-    """
-    Prints a summary of descriptive statistics for the given DataFrame.
+import pandas as pd
+from IPython.display import display
 
-    Parameters:
-    df (pd.DataFrame): The input DataFrame containing the data.
+def summary_statistics(df):
+    EVEN_ROW_COLOR = "#00BFFF"  # Light blue for even rows
+    HEADER_COLOR = "#000000"  # Black for header text
+
     """
-    print("Visão geral dos dados")
-    print(df.describe().round(3))
-    print("\nMédias por tratamento (TR)")
-    print(df.groupby('TR').mean().round(3))
-    print("\nDesvio padrão por tratamento (TR)")
-    print(df.groupby('TR').std().round(3))
-    print("\nCoeficiente de variação por tratamento (TR)")
+    Prints formatted descriptive statistics (mean, standard deviation, and coefficient of variation)
+    with alternating row colors for better readability.
+    """
+    print("Visão geral dos dados:")
+    display(df.describe().round(3).style.set_table_styles(
+        [
+            {
+                'selector': 'th',
+                'props': [('background-color', 'lightgray'), ('color', HEADER_COLOR)]
+            },
+            {
+                'selector': 'tbody tr:nth-child(even)',
+                'props': [('background-color', EVEN_ROW_COLOR)]
+            }
+        ]
+    ))
+
+    print("\nMédias por tratamento (TR):")
+    display(df.groupby('TR').mean().round(3).style.set_table_styles(
+        [
+            {
+                'selector': 'th',
+                'props': [('background-color', 'lightgray'), ('color', HEADER_COLOR)]
+            },
+            {
+                'selector': 'tbody tr:nth-child(even)',
+                'props': [('background-color', EVEN_ROW_COLOR)]
+            }
+        ]
+    ))
+
+    print("\nDesvio padrão por tratamento (TR):")
+    display(df.groupby('TR').std().round(3).style.set_table_styles(
+        [
+            {
+                'selector': 'th',
+                'props': [('background-color', 'lightgray'), ('color', HEADER_COLOR)]
+            },
+            {
+                'selector': 'tbody tr:nth-child(even)',
+                'props': [('background-color', EVEN_ROW_COLOR)]
+            }
+        ]
+    ))
+
+    print("\nCoeficiente de variação por tratamento (TR):")
     coef_var = (df.groupby('TR').std() / df.groupby('TR').mean()).round(3)
-    print(coef_var)
+    display(coef_var.style.set_table_styles(
+        [
+            {
+                'selector': 'th',
+                'props': [('background-color', 'lightgray'), ('color', HEADER_COLOR)]
+            },
+            {
+                'selector': 'tbody tr:nth-child(even)',
+                'props': [('background-color', EVEN_ROW_COLOR)]
+            }
+        ]
+    ))
 
