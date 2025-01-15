@@ -131,35 +131,39 @@ def plot_distributions(df):
     # Check if 'TR' exists in the DataFrame
     if "TR" not in df.columns:
         print("Column 'TR' not found in DataFrame. Proceeding with all columns.")
-        TRn = 0
-    else:
-        TRn = df["TR"].nunique()  # Number of unique values in "TR"
-
-    # Generate a discrete color palette
-    cmap = cm.get_cmap("rocket", TRn if TRn > 0 else 10)  # Sample colors from colormap
-    palette = [cmap(i) for i in range(cmap.N)]
-
+    
     # Exclude 'TR' from distribution plots
     columns_to_plot = [col for col in df.columns if col != "TR"]
     num_charts = len(columns_to_plot)
+
+    if num_charts == 0:
+        print("No columns to plot.")
+        return
 
     # Subplot grid
     num_cols = 2  # Number of columns in the grid
     num_rows = (num_charts + num_cols - 1) // num_cols  # Calculate rows dynamically
 
-    plt.figure(figsize=(15, num_rows * 5))
+    # Create the figure
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, num_rows * 5))
+    axes = axes.flatten()  # Flatten for easy iteration
+
+    # Generate a color palette
+    palette = sns.color_palette("rocket", len(columns_to_plot))
 
     for i, col in enumerate(columns_to_plot):
-        plt.subplot(num_rows, num_cols, i + 1)
-        sns.histplot(df[col], kde=True, color=palette[i % len(palette)])
-        plt.title(f"Distribution of {col}")
-        plt.xlabel(col)
-        plt.ylabel("Frequency")
-    
-    for idx in range(plot_idx, len(axes)):
-        fig.delaxes(axes[idx])  # Remove extra axes
+        sns.histplot(df[col].dropna(), kde=True, color=palette[i], ax=axes[i])
+        axes[i].set_title(f"Distribution of {col}")
+        axes[i].set_xlabel(col)
+        axes[i].set_ylabel("Frequency")
+
+    # Remove empty subplots
+    for j in range(num_charts, len(axes)):
+        fig.delaxes(axes[j])
+
     plt.tight_layout()
     plt.show()
+
 
 
 def summary_statistics(df):
