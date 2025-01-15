@@ -209,3 +209,24 @@ def summary_statistics(df):
         ]
     ))
 
+def all_dz_statistics(df):
+    """
+    Runs all analysis functions sequentially on the DataFrame.
+    """
+
+
+    print("Running drop_rep_columns...")
+    df = drop_rep_columns(df)
+
+    print("\nRunning summary_statistics...")
+    summary_statistics(df)
+
+    print("\nRunning plot_visualization...")
+    plot_visualization(df)
+
+    print("\nRunning plot_distributions...")
+    plot_distributions(df)
+
+
+
+    return df
