@@ -7,19 +7,21 @@ import warnings
 
 def drop_rep_columns(df):
     """
-    Drops columns from the DataFrame where the column name contains 'REP' (case insensitive).
+    Drops columns from the DataFrame where the column name contains 'rep', 'REP', 'RP', or 'rp' (case insensitive).
 
     Parameters:
     df (pd.DataFrame): The input DataFrame.
 
     Returns:
-    pd.DataFrame: The DataFrame with 'REP' columns removed.
+    pd.DataFrame: The DataFrame with specified columns removed.
     """
-    # Identify columns containing 'REP' (case insensitive)
-    columns_to_drop = [col for col in df.columns if 'REP' in col.upper()]
+    # Identify columns containing 'rep', 'REP', 'RP', or 'rp' (case insensitive)
+    keywords = ["rep", "rp"]
+    columns_to_drop = [col for col in df.columns if any(keyword.upper() in col.upper() for keyword in keywords)]
 
     # Drop those columns
     return df.drop(columns=columns_to_drop, inplace=False)  # Set inplace to False to return a new DataFrame
+
 
 
 def plot_visualization(df):
