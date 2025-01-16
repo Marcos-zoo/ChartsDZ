@@ -249,3 +249,46 @@ def all_dz_statistics(df):
     print("\nRunning plot_visualization...")
     plot_visualization(df)
  #  return df
+
+def check_dataset(df, valid_names):
+    """
+    Checks the dataset for the following:
+    1. Validates all variable names in the DataFrame against a valid list of names.
+    2. Checks if the content of each column is numeric (ignoring cells with a dot '.').
+    
+    Parameters:
+    df (pd.DataFrame): The input DataFrame.
+    valid_names (list): List of valid variable names.
+    
+    Prints a warning for each invalid variable name and non-numeric content.
+    """
+    # Check variable names
+    for column in df.columns:
+        if column not in valid_names:
+            print(f"Your variable name: '{column}' is not a valid name, please change it.")
+    
+    # Check for numeric content in columns
+    for column in df.columns:
+        # Replace dots ('.') with NaN for checking numeric content
+        col_cleaned = df[column].replace('.', pd.NA)
+        
+        # Check if all values are numeric after removing dots
+        if not pd.to_numeric(col_cleaned, errors='coerce').notna().all():
+            print(f"Column '{column}' contains non-numeric values (excluding dots). Please clean the data.")
+    
+    print("Dataset validation completed.")
+
+# Example usage:
+
+# Define your list of valid variable names
+valid_names = [
+    "BW", "FCR", "ADG", "DMI", "BWG", "EO", "EM", "EW",
+    "AW", "SW", "ES", "ST", "YW", "YC", "HU",
+    "RBC", "CBC", "HTC", "MCV", "MCH", "TP", "WBC", "HET", "LYM", "MON", "EOS", "BAS", "PLT",
+    "CP", "ME", "AA", "EE", "PD", "MD", "DD", "TL", "TW", "MM", "SI",
+    "LPS", "Ig", "IFN-γ", "IL", "NO", "ROS", "TLR", "TNF-α"
+]
+
+
+# Check the dataset
+
