@@ -258,7 +258,7 @@ valid_names = [
     "LPS", "Ig", "IFN-γ", "IL", "NO", "ROS", "TLR", "TNF-α"
 ]
 
-def check_dataset(df, valid_names):
+def check_dataset(df):
     """
     Checks the dataset for the following:
     1. Validates all variable names in the DataFrame against a valid list of names.
