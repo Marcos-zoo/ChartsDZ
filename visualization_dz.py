@@ -250,6 +250,14 @@ def all_dz_statistics(df):
     plot_visualization(df)
  #  return df
 
+valid_names = [
+    "TR", "BW", "FCR", "ADG", "DMI", "BWG", "EO", "EM", "EW", "FI",
+    "AW", "SW", "ES", "ST", "YW", "YC", "HU",
+    "RBC", "CBC", "HTC", "MCV", "MCH", "TP", "WBC", "HET", "LYM", "MON", "EOS", "BAS", "PLT",
+    "CP", "ME", "AA", "EE", "PD", "MD", "DD", "TL", "TW", "MM", "SI",
+    "LPS", "Ig", "IFN-γ", "IL", "NO", "ROS", "TLR", "TNF-α"
+]
+
 def check_dataset(df, valid_names):
     """
     Checks the dataset for the following:
@@ -281,13 +289,7 @@ def check_dataset(df, valid_names):
 # Example usage:
 
 # Define your list of valid variable names
-valid_names = [
-    "BW", "FCR", "ADG", "DMI", "BWG", "EO", "EM", "EW",
-    "AW", "SW", "ES", "ST", "YW", "YC", "HU",
-    "RBC", "CBC", "HTC", "MCV", "MCH", "TP", "WBC", "HET", "LYM", "MON", "EOS", "BAS", "PLT",
-    "CP", "ME", "AA", "EE", "PD", "MD", "DD", "TL", "TW", "MM", "SI",
-    "LPS", "Ig", "IFN-γ", "IL", "NO", "ROS", "TLR", "TNF-α"
-]
+
 
 
 # Check the dataset
